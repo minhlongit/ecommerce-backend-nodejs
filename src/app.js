@@ -1,3 +1,4 @@
+require("dotenv").config;
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -15,19 +16,18 @@ app.use(helmet());
 // optimize request performance
 app.use(compression());
 
+// parse request body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // init db
 require("./dbs/init.mongodb.js");
 const { checkOverload } = require("./helpers/check.connect.js");
 checkOverload();
 
 // init routes
-app.get("/", (req, res, next) => {
-  const strCompress = "Hello Compression";
-  return res.status(200).json({
-    message: "Welcome to E-Commerce API",
-    metadata: strCompress.repeat(10000),
-  });
-});
+app.use("", require("./routes"));
+
 // handling errors
 
 module.exports = app;

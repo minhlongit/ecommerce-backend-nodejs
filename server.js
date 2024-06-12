@@ -1,11 +1,11 @@
 const app = require("./src/app");
 const http = require("http");
-const port = 3055;
+const PORT = process.env.PORT || 3055;
 
 const server = http.createServer(app);
 
-server.listen(port, () => {
-  console.log(`WSV E-Commerce start with ${port}`);
+server.listen(PORT, () => {
+  console.log(`WSV E-Commerce start with ${PORT}`);
 });
 
 const connections = new Set();
